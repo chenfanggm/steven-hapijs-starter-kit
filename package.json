@@ -1,0 +1,67 @@
+{
+  "name": "steven-hapijs-starter-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenfanggm/steven-hapijs-starter-kit.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chenfanggm/steven-hapijs-starter-kit/issues"
+  },
+  "homepage": "https://github.com/chenfanggm/steven-hapijs-starter-kit#readme",
+  "scripts": {
+    "dev": "better-npm-run dev",
+    "start": "better-npm-run start",
+    "forever": "better-npm-run start",
+    "test": "better-npm-run test",
+    "cluster": "better-npm-run cluster",
+    "lint": "eslint --ext .js ."
+  },
+  "betterScripts": {
+    "dev": {
+      "command": "nodemon bin/start.js",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "app:*"
+      }
+    },
+    "start": {
+      "command": "nodemon bin/start.js",
+      "env": {
+        "NODE_ENV": "production",
+        "DEBUG": "app:*"
+      }
+    },
+    "test": {
+      "command": "node node_modules/.bin/isparta cover _mocha -- --ui bdd --reporter spec --colors ./tests/**/*.spec.js",
+      "env": {
+        "NODE_ENV": "test",
+        "DEBUG": "app:*"
+      }
+    },
+    "cluster": {
+      "command": "node bin/cluster.js",
+      "env": {
+        "NODE_ENV": "production",
+        "DEBUG": "app:*"
+      }
+    }
+  },
+  "dependencies": {
+    "debug": "^3.0.0",
+    "good": "^7.2.0",
+    "good-console": "^6.4.0",
+    "good-squeeze": "^5.0.2",
+    "hapi": "^16.5.2",
+    "inert": "^4.2.1",
+    "joi": "^10.6.0"
+  },
+  "devDependencies": {
+    "better-npm-run": "^0.1.0",
+    "nodemon": "^1.11.0"
+  }
+}
