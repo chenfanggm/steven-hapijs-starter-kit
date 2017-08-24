@@ -8,19 +8,7 @@ const debug = require('debug')('app:server')
 
 
 debug('instantiate server...')
-const server = new Hapi.Server({
-  connections: {
-    routes: {
-      cors: config.cors,
-      files: {
-        relativeTo: config.dir_static
-      }
-    },
-    router: {
-      stripTrailingSlash: config.stripTrailingSlash
-    }
-  }
-})
+const server = new Hapi.Server({debug: config.debugMode})
 
 // -----------------------------------
 // create connection
@@ -28,7 +16,48 @@ const server = new Hapi.Server({
 debug('establish connection...')
 server.connection({
   host: config.server_host,
-  port: config.server_port
+  port: config.server_port,
+  labels: ['api'],
+  routes: {
+    cors: config.cors,
+    files: {
+      relativeTo: config.dir_static
+    }
+  },
+  router: {
+    stripTrailingSlash: config.stripTrailingSlash
+  }
+})
+
+const apiServer = server.select('api')
+
+const inert = require('inert')
+const logging = require('./plugins/loggingPlugin')
+const myPlugin = require('./plugins/myPlugin')
+
+
+module.exports = {
+  initPlugins(server) {
+    server.register([
+      inert,
+      myPlugin,
+      logging
+    ], (err) => {
+      if (err) {
+        console.error('Failed to load a plugin:', err)
+      }
+    })
+  }
+}
+
+server.register([
+  { register: inert }, // serve static file
+  { register: myPlugin },
+  { register: logging }
+], (err) => {
+  if (err) {
+    throw err
+  }
 })
 
 // -----------------------------------

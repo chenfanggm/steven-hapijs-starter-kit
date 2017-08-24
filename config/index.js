@@ -28,8 +28,10 @@ module.exports = {
     credentials: true
   },
   stripTrailingSlash: true,
+  debugMode: config.env === 'development' ? { request: [ 'error', 'request-internal' ] } : {},
 
-  // ----------------------------------
+
+// ----------------------------------
   // Database Configuration
   // ----------------------------------
   mongo: {
