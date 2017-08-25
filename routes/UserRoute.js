@@ -13,7 +13,7 @@ module.exports.greetingUser = {
     }
   },
   description: 'Say hello!',
-    notes: 'The user parameter defaults to \'stranger\' if unspecified',
+  notes: 'The user parameter defaults to \'stranger\' if unspecified',
   tags: ['api', 'greeting']
 }
 

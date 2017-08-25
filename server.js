@@ -1,10 +1,10 @@
 'use strict'
-const path = require('path')
 const Hapi = require('hapi')
 const routes = require('./routes')
-const plugins = require('./plugins')
 const config = require('./config')
 const debug = require('debug')('app:server')
+const inert = require('inert')
+const loggingPlugin = require('./plugins/loggingPlugin')
 
 
 debug('instantiate server...')
@@ -31,45 +31,24 @@ server.connection({
 
 const apiServer = server.select('api')
 
-const inert = require('inert')
-const logging = require('./plugins/loggingPlugin')
-const myPlugin = require('./plugins/myPlugin')
-
-
-module.exports = {
-  initPlugins(server) {
-    server.register([
-      inert,
-      myPlugin,
-      logging
-    ], (err) => {
-      if (err) {
-        console.error('Failed to load a plugin:', err)
-      }
-    })
-  }
-}
-
+// -----------------------------------
+// register plugins & routes
+// -----------------------------------
+debug('init plugins...')
 server.register([
-  { register: inert }, // serve static file
-  { register: myPlugin },
-  { register: logging }
+  inert, // serve static file
+  loggingPlugin,
+  {
+    register: routes,
+    routes: {
+      prefix: '/api/v1'
+    }
+  }
 ], (err) => {
   if (err) {
     throw err
   }
 })
 
-// -----------------------------------
-// create routes
-// -----------------------------------
-debug('init routes...')
-routes.initRoutes(server)
-
-// -----------------------------------
-// register plugins
-// -----------------------------------
-debug('init plugins...')
-plugins.initPlugins(server)
 
 module.exports = server
