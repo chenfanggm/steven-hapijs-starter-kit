@@ -1,4 +1,5 @@
 'use strict'
+const winston = require('../common/winston')
 
 
 const errorHandler = function (server, options, next) {
@@ -17,7 +18,9 @@ const handleErrorAtPreResponse = function (request, reply) {
     return reply.continue()
   }
 
-  console.log('got error before response: ', response)
+  if (response.output && response.output.statusCode >= 500) {
+    winston.error(response)
+  }
 
   return reply.continue()
 }
