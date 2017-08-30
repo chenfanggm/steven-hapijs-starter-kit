@@ -17,7 +17,7 @@ const returnBoomError = {
 
 const throwError = {
   handler: function (request, reply) {
-    // trigger uncaught error
+    // not trigger uncaught error
     // protected by hapi and return 500 internal server error
     throw new Error('Throw error')
   }
@@ -25,7 +25,7 @@ const throwError = {
 
 const throwBoomError = {
   handler: function (request, reply) {
-    // trigger uncaught error
+    // not trigger uncaught error
     // protected by hapi and return 500 internal server error
     throw boom.badRequest('Throw boom error')
   }
@@ -92,7 +92,7 @@ const rejectErrorInAsyncWithinNoReturnedPromise = {
       Request
         .get('http://localhost')
         .on('error', (err) => {
-          reject(new Error(`Reject error in async within returned promise, and got error: ${err}`))
+          reject(new Error(`Reject error in async within no returned promise, and got error: ${err}`))
         })
     })
   }
@@ -113,8 +113,8 @@ const throwErrorInAsyncWithinReturnedPromise = {
 
 const throwErrorInAsyncWithinNoReturnedPromise = {
   handler: function (request, reply) {
-    // trigger uncaught error
-    // will turn down the server
+    // not trigger uncaught error
+    // protected by hapi and return 500 internal server error
     new Promise((resolve, reject) => {
       Request
         .get('http://localhost')

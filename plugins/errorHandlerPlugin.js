@@ -19,7 +19,7 @@ const handleErrorAtPreResponse = function (request, reply) {
     return reply.continue()
   }
 
-  console.log('before response, we got error: ', response)
+  console.log('got error before response: ', response)
 
   return reply.continue()
 }

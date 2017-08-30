@@ -1,11 +1,11 @@
 'use strict'
 const Hapi = require('hapi')
-const routes = require('./routes')
-const config = require('./config')
+const routes = require('../routes/index')
+const config = require('../config/index')
 const debug = require('debug')('app:server')
 const inert = require('inert')
-const loggingPlugin = require('./plugins/loggingPlugin')
-const errorHandlerPlugin = require('./plugins/errorHandlerPlugin')
+const loggingPlugin = require('../plugins/loggingPlugin')
+const errorHandlerPlugin = require('../plugins/errorHandlerPlugin')
 
 
 debug('instantiate server...')
