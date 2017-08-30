@@ -10,7 +10,7 @@ const logger = new (winston.Logger)({
       datePattern: 'yyyy-MM-dd.',
       prepend: true,
       colorize: false,
-      json: false,
+      json: config.logger.json,
       prettyPrint: true,
       silent: false
     })

@@ -61,6 +61,7 @@ module.exports = {
   logger: {
     level: "debug",
     colorize: true,
+    json: true,
     opsInterval: 30 * 60 * 1000,
     requestLogPath: path.resolve(__dirname, '../logs'),
     requestLogName: 'starter-kit.log',
