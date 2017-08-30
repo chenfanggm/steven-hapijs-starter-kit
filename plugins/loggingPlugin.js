@@ -1,7 +1,8 @@
 'use strict'
+const good = require('good')
 
 module.exports = {
-  register: require('good'),
+  register: good,
   options: {
     reporters: {
       console: [{

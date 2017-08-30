@@ -5,6 +5,7 @@ const config = require('./config')
 const debug = require('debug')('app:server')
 const inert = require('inert')
 const loggingPlugin = require('./plugins/loggingPlugin')
+const errorHandlerPlugin = require('./plugins/errorHandlerPlugin')
 
 
 debug('instantiate server...')
@@ -36,14 +37,10 @@ const apiServer = server.select('api')
 // -----------------------------------
 debug('init plugins...')
 server.register([
-  inert, // serve static file
   loggingPlugin,
-  {
-    register: routes,
-    routes: {
-      prefix: '/api/v1'
-    }
-  }
+  errorHandlerPlugin,
+  inert, // serve static file
+  routes
 ], (err) => {
   if (err) {
     throw err

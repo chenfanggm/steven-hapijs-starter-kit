@@ -28,7 +28,7 @@ module.exports = {
     credentials: true
   },
   stripTrailingSlash: true,
-  debugMode: this.env === 'development' ? { request: [ 'error', 'request-internal' ] } : {},
+  debugMode: process.env.NODE_ENV === 'development' ? { request: ['error', 'request-internal', 'uncaught'] } : {},
 
 
 // ----------------------------------

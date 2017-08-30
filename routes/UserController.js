@@ -1,15 +1,14 @@
 'use strict'
-const Joi = require('joi')
-
+const joi = require('joi')
 
 module.exports.greetingUser = {
   handler: function (request, reply) {
     const user = request.params.user ? encodeURIComponent(request.params.user) : 'stranger'
-    reply('Hello ' + user + '!')
+    return reply('Hello ' + user + '!')
   },
   validate: {
     params: {
-      user: Joi.string().min(3).max(10)
+      user: joi.string().min(3).max(10)
     }
   },
   description: 'Say hello!',
@@ -30,7 +29,7 @@ module.exports.listUser = {
   },
   validate: {
     query: {
-      limit: Joi.number().integer().min(1).max(100).default(10)
+      limit: joi.number().integer().min(1).max(100).default(10)
     }
   }
 }
