@@ -31,7 +31,7 @@ module.exports = {
   debugMode: process.env.NODE_ENV === 'development' ? { request: ['error', 'request-internal', 'uncaught'] } : {},
 
 
-// ----------------------------------
+  // ----------------------------------
   // Database Configuration
   // ----------------------------------
   mongo: {
@@ -58,15 +58,20 @@ module.exports = {
   // ----------------------------------
   // Logger Configuration
   // ----------------------------------
-  log: {
+  logger: {
     level: "debug",
-    colorize: true
+    colorize: true,
+    opsInterval: 30 * 60 * 1000,
+    requestLogPath: path.resolve(__dirname, '../logs'),
+    requestLogName: 'starter-kit.log',
+    requestLogFile: path.resolve(__dirname, '../logs/starter-kit.log'),
+    opsLogFile: path.resolve(__dirname, '../logs/ops.log')
   },
 
   // ----------------------------------
   // Test Configuration
   // ----------------------------------
-  coverage_reporters : [
+  coverageReporters : [
     { type : 'text-summary' },
     { type : 'html', dir : 'coverage' }
   ]
