@@ -18,6 +18,7 @@
     "start": "better-npm-run start",
     "forever": "better-npm-run start",
     "test": "better-npm-run test",
+    "test:cov": "better-npm-run test:cov",
     "cluster": "better-npm-run cluster",
     "lint": "eslint --ext .js ."
   },
@@ -37,7 +38,14 @@
       }
     },
     "test": {
-      "command": "node node_modules/.bin/isparta cover _mocha -- --ui bdd --reporter spec --colors ./tests/**/*.spec.js",
+      "command": "lab -c -l -t 85 -v",
+      "env": {
+        "NODE_ENV": "test",
+        "DEBUG": "app:*"
+      }
+    },
+    "test:cov": {
+      "command": "lab -r html -o ./coverage/coverage.html",
       "env": {
         "NODE_ENV": "test",
         "DEBUG": "app:*"
@@ -70,6 +78,8 @@
   },
   "devDependencies": {
     "better-npm-run": "^0.1.0",
+    "chai": "^4.1.1",
+    "lab": "^14.2.1",
     "nodemon": "^1.11.0"
   }
 }
