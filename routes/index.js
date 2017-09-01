@@ -24,8 +24,6 @@ const routes = (server, options, next) => {
     { method: 'GET', path: '/throwErrorInAsyncWithinNoReturnedPromise', config: Error.throwErrorInAsyncWithinNoReturnedPromise },
     // user
     { method: 'GET', path: '/hello/{user?}', config: User.greetingUser},
-    { method: 'GET', path: '/list', config: User.listUser },
-    { method: 'GET', path: '/hello/{user*2}', config: User.greetingMultiUser},
     // default not found
     { method: 'GET', path: '/{path*}', config: Main.notFound }
   ])

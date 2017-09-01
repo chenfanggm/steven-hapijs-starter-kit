@@ -10,7 +10,7 @@ const returnError = {
 
 const returnBoomError = {
   handler: function (request, reply) {
-    // not return customized message to client
+    // return customized message to client
     reply(boom.badRequest('Return boom error'))
   }
 }
@@ -27,6 +27,7 @@ const throwBoomError = {
   handler: function (request, reply) {
     // not trigger uncaught error
     // protected by hapi and return 500 internal server error
+    // need more approval, since test case not get response but a exception
     throw boom.badRequest('Throw boom error')
   }
 }

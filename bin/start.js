@@ -8,20 +8,20 @@ const debug = require('debug')('app:bin:start')
 // -----------------------------------
 process.on('exit', (code) => {
   const message = `[process] exiting with code ${code}`
-  console.log(message)
+  //console.log(message)
   //Logger.error(message)
 })
 
 process.on('uncaughtException', (err) => {
   const message = `[process] encountered an uncaughtException. Will now exit. ${err}, Stack: ${err.stack}.`
-  console.log(message)
+  //console.log(message)
   //Logger.error(message)
   process.exit(2)
 })
 
 process.on('unhandledRejection', (err) => {
   const message = `[process] encountered an unhandledRejection. Will ignore and continue. ${err}, Stack: ${err.stack}.`
-  console.log(message)
+  //console.log(message)
   //Logger.error(message)
 })
 

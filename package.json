@@ -38,7 +38,7 @@
       }
     },
     "test": {
-      "command": "lab -c -l -t 85 -v",
+      "command": "lab -c -l -t 85 -v --coverage-exclude config --coverage-exclude server",
       "env": {
         "NODE_ENV": "test",
         "DEBUG": "app:*"
@@ -80,6 +80,8 @@
     "better-npm-run": "^0.1.0",
     "chai": "^4.1.1",
     "lab": "^14.2.1",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "sinon": "^3.2.1",
+    "sinon-chai": "^2.13.0"
   }
 }
