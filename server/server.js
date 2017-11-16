@@ -1,9 +1,11 @@
 'use strict'
 const Hapi = require('hapi')
-const routes = require('../routes/index')
-const config = require('../config/index')
+const Nes = require('nes');
 const debug = require('debug')('app:server')
 const inert = require('inert')
+const config = require('../config')
+const routes = require('../routes')
+const wsRoutes = require('../wsRoutes')
 const logger = require('../plugins/logger')
 const errorHandler = require('../plugins/errorHandler')
 
@@ -42,9 +44,32 @@ server.register([
   routes,
   logger
 ], (err) => {
-  if (err) {
-    throw err
+  if (err) throw err
+})
+
+server.register({
+  register: Nes,
+  options: {
+    onConnection: (socket) => {
+      console.log(`A client connected with id ${socket.id}`)
+    },
+    onDisconnection: (socket) => {
+      console.log(`A client dis-connected with id ${socket.id}`)
+    },
+    onMessage: (socket, message, next) => {
+      console.log(message)
+      //console.log(`A message sent from client with id ${socket.id}, as ${message}`)
+      next()
+    }
   }
+}, (err) => {
+  if (err) throw err
+
+  server.register([
+    wsRoutes
+  ], (err) => {
+    if (err) throw err
+  })
 })
 
 module.exports = server

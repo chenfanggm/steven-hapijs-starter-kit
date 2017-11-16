@@ -71,6 +71,7 @@
     "hapi": "^16.5.2",
     "inert": "^4.2.1",
     "joi": "^10.6.0",
+    "nes": "^6.4.3",
     "request": "^2.81.0",
     "rotating-file-stream": "^1.2.2",
     "winston": "^2.3.1",
