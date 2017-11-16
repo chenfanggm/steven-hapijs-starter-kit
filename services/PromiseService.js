@@ -1,5 +1,9 @@
+//
+
 const normalNestedPromiseWithResolve = () => {
-  return Promise.resolve()
+  return new Promise((resolve, reject) => {
+    resolve(true)
+  })
     .then(() => {
       return Promise.resolve()
         .then(()=> {

@@ -5,7 +5,7 @@ const debug = require('debug')('app:server')
 const inert = require('inert')
 const config = require('../config')
 const routes = require('../routes')
-const wsRoutes = require('../wsRoutes')
+const wsRoutes = require('../routesWS')
 const logger = require('../plugins/logger')
 const errorHandler = require('../plugins/errorHandler')
 
@@ -40,36 +40,36 @@ const apiServer = server.select('api')
 debug('init plugins...')
 server.register([
   errorHandler,
-  inert, // serve static file
+  //inert, // serve static file
   routes,
   logger
 ], (err) => {
   if (err) throw err
 })
 
-server.register({
-  register: Nes,
-  options: {
-    onConnection: (socket) => {
-      console.log(`A client connected with id ${socket.id}`)
-    },
-    onDisconnection: (socket) => {
-      console.log(`A client dis-connected with id ${socket.id}`)
-    },
-    onMessage: (socket, message, next) => {
-      console.log(message)
-      //console.log(`A message sent from client with id ${socket.id}, as ${message}`)
-      next()
-    }
-  }
-}, (err) => {
-  if (err) throw err
-
-  server.register([
-    wsRoutes
-  ], (err) => {
-    if (err) throw err
-  })
-})
+// server.register({
+//   register: Nes,
+//   options: {
+//     onConnection: (socket) => {
+//       console.log(`A client connected with id ${socket.id}`)
+//     },
+//     onDisconnection: (socket) => {
+//       console.log(`A client dis-connected with id ${socket.id}`)
+//     },
+//     onMessage: (socket, message, next) => {
+//       console.log(message)
+//       //console.log(`A message sent from client with id ${socket.id}, as ${message}`)
+//       next()
+//     }
+//   }
+// }, (err) => {
+//   if (err) throw err
+//
+//   server.register([
+//     wsRoutes
+//   ], (err) => {
+//     if (err) throw err
+//   })
+// })
 
 module.exports = server
