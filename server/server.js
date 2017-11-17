@@ -1,6 +1,5 @@
-'use strict'
 const Hapi = require('hapi')
-const Nes = require('nes');
+const Nes = require('nes')
 const debug = require('debug')('app:server')
 const inert = require('inert')
 const config = require('../config')
@@ -8,6 +7,7 @@ const routes = require('../routes')
 const wsRoutes = require('../routesWS')
 const logger = require('../plugins/logger')
 const errorHandler = require('../plugins/errorHandler')
+const winston = require('../common/winston')
 
 
 debug('instantiate server...')
@@ -71,5 +71,26 @@ server.register([
 //     if (err) throw err
 //   })
 // })
+
+if (config.env !== 'test') {
+  process.on('uncaughtException', (err) => {
+    const message = `We encountered an uncaughtException. ${err}, Stack: ${err.stack}. Will now exit.`
+    console.log (message)
+    winston.error(message)
+    process.exit(2)
+  })
+
+  process.on('unhandledRejection', (err) => {
+    const message = `We encountered an unhandledRejection. ${err}, Stack: ${err.stack}. Will ignore and continue.`
+    console.log (message)
+    winston.error(message)
+  })
+
+  process.on('exit', (code) => {
+    const message = `Node process exiting with code ${code}`
+    console.log (message)
+    winston.error(message)
+  })
+}
 
 module.exports = server

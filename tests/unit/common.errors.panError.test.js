@@ -9,8 +9,8 @@ const throwPanError = (code, message, payload) => {
 describe('PanError Test...', () => {
 
   const errorMeta = PanErrorMeta.FE_API.INTERNAL_SERVER_ERROR
-  const errorCode = errorMeta.code
-  const errorMessage = errorMeta.message
+  const errorCode = errorMeta.CODE
+  const errorMessage = errorMeta.MESSAGE
   const errorPayload = {
     status: 500
   }
@@ -101,7 +101,7 @@ describe('PanError Test...', () => {
 
   describe('when throw a code only PanError, and that code does not have message', () => {
     it('should have only have the code', () => {
-      const errorCode = PanErrorMeta.FE_API.BAD_REQUEST.code
+      const errorCode = PanErrorMeta.FE_API.BAD_REQUEST.CODE
       try {
         throwPanError(errorCode)
       } catch (err) {

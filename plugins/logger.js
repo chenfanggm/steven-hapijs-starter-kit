@@ -1,4 +1,3 @@
-'use strict'
 const good = require('good')
 const winston = require('../common/winston')
 const config = require('../config')
@@ -21,14 +20,14 @@ module.exports = {
       }, {
         module: 'good-squeeze',
         name: 'SafeJson'
-      }, {
+      }/*, {
         module: 'rotating-file-stream',
         args: [config.logger.requestLogName, {
           path: config.logger.requestLogPath,
           size: '10M',
           interval: '1d'
         }]
-      }],
+      }*/],
       winston: [{
         module: 'good-squeeze',
         name: 'Squeeze',

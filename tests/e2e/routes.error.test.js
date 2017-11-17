@@ -1,10 +1,6 @@
 const server = require('../../server/server')
+const PanErrorMeta = require('../../common/errors/PanErrorMeta')
 
-
-const expectedRoundTime = 1 //ms
-const testbed = {
-  spy: {}
-}
 
 describe('GET /api/v1/returnError', () => {
   it('should handled by hapi, then response 500', (done) => {
@@ -14,7 +10,7 @@ describe('GET /api/v1/returnError', () => {
     }, (response) => {
       const { statusCode, result } = response
       expect(statusCode).toBe(500)
-      expect(result.error).toBe('Internal Server Error')
+      expect(result.message).toBe(PanErrorMeta.FE_API.INTERNAL_SERVER_ERROR.MESSAGE)
       done()
     })
   })
