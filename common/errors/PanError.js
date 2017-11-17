@@ -15,14 +15,27 @@ const PanError = function (code, message, payload) {
     this.payload = message
   } else if (code.indexOf('PAN_') === 0 && typeof message === 'undefined') {
     this.code = code
-    this.message = PanErrorCode[code]
+    const errorCode = PanErrorCode[code]
+    this.message = errorCode.MESSAGE
+    this.statusCode = errorCode.STATUS_CODE
+    this.isInternal = errorCode.IS_INTERNAL
   } else if (code.indexOf('PAN_') === 0 && typeof message === 'object') {
     this.code = code
-    this.message = PanErrorCode[code]
+    const errorCode = PanErrorCode[code]
+    this.message = errorCode.MESSAGE
+    this.statusCode = errorCode.STATUS_CODE
+    this.isInternal = errorCode.IS_INTERNAL
     this.payload = message
   } else {
     this.code = code || 0
-    this.message = message
+    const errorCode = PanErrorCode[this.code]
+    if (errorCode) {
+      this.message = message || errorCode.MESSAGE
+      this.statusCode = errorCode.STATUS_CODE
+      this.isInternal = errorCode.IS_INTERNAL
+    } else {
+      this.message = message
+    }
     this.payload = payload
   }
 

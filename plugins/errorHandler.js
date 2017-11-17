@@ -1,6 +1,5 @@
 const winston = require('../common/winston')
 const PanError = require('../common/errors/PanError')
-const boom = require('boom')
 
 
 const errorHandler = (server, options, next) => {
@@ -21,10 +20,13 @@ const handleErrorAtPreResponse = (request, reply) => {
     response.output.payload = {}
     if (response.code)
       response.output.payload.code = response.code
-    if (response.message)
+    if (response.message && !response.isInternal)
       response.output.payload.message = response.message
     if (response.payload)
       response.output.payload.payload = response.payload
+
+    if (response.statusCode)
+      response.output.statusCode = response.statusCode
 
     winston.error(response)
   } else if (response.output && response.output.statusCode >= 500){

@@ -1,12 +1,12 @@
 const Request = require('request')
 const boom = require('boom')
-const PanError = require('../common/errors/PanError')
-const PanErrorMeta = require('../common/errors/PanErrorMeta')
+const fries = require('../common/errors/fries')
+
 
 const returnError = {
-  handler: (request, reply) => {
+  handler: function (request, reply) {
     // not return customized message to client
-    reply(new PanError(PanErrorMeta.FE_API.INTERNAL_SERVER_ERROR.CODE))
+    reply(new Error('Return error'))
   }
 }
 

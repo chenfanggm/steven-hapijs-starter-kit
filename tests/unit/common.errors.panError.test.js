@@ -1,5 +1,7 @@
 const PanError = require('../../common/errors/PanError')
-const PanErrorMeta = require('../../common/errors/PanErrorMeta')
+const PanErrorConstants = require('../../common/errors/PanErrorConstants')
+const PanErrorCode = require('../../common/errors/PanErrorCode')
+
 
 
 const throwPanError = (code, message, payload) => {
@@ -8,8 +10,8 @@ const throwPanError = (code, message, payload) => {
 
 describe('PanError Test...', () => {
 
-  const errorMeta = PanErrorMeta.FE_API.INTERNAL_SERVER_ERROR
-  const errorCode = errorMeta.CODE
+  const errorCode = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
+  const errorMeta = PanErrorCode[errorCode]
   const errorMessage = errorMeta.MESSAGE
   const errorPayload = {
     status: 500
@@ -100,13 +102,14 @@ describe('PanError Test...', () => {
   })
 
   describe('when throw a code only PanError, and that code does not have message', () => {
-    it('should have only have the code', () => {
-      const errorCode = PanErrorMeta.FE_API.BAD_REQUEST.CODE
+    it('should have the code and the pre-defined message', () => {
+      const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
+      const errorMeta = PanErrorCode[errorCode]
       try {
         throwPanError(errorCode)
       } catch (err) {
         expect(err.code).toBe(errorCode)
-        expect(err.message).toBeUndefined()
+        expect(err.message).toBe(errorMeta.MESSAGE)
         expect(err.payload).toBeUndefined()
       }
     })

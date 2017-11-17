@@ -1,12 +1,12 @@
 
 const home = {
-  handler: function (request, reply) {
+  handler: (request, reply) => {
     reply.file('index.html')
   }
 }
 
 const notFound = {
-  handler: function (request, reply) {
+  handler: (request, reply) => {
     reply('Not Found')
   }
 }
