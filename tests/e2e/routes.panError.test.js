@@ -7,110 +7,110 @@ const expectedResponsePayloadData = 'Testing data'
 
 describe('Testing PanError Route...', () => {
   describe('GET /api/v1/returnBadImplementation', () => {
-    it('should response 500 only', (done) => {
-      server.inject({
+    it('should response 500 only', () => {
+      return server.inject({
         method: 'GET',
         url: '/api/v1/returnBadImplementation'
-      }, (response) => {
-        const { statusCode, result } = response
-        const errorCode = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
-        const errorMeta = PanErrorCode[errorCode]
-        expect(statusCode).toBe(errorMeta.STATUS_CODE)
-        expect(result.code).toBe(errorCode)
-        expect(result.message).toBeUndefined()
-        done()
       })
+        .then((response) => {
+          const { statusCode, result } = response
+          const errorCode = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
+          const errorMeta = PanErrorCode[errorCode]
+          expect(statusCode).toBe(errorMeta.STATUS_CODE)
+          expect(result.code).toBe(errorCode)
+          expect(result.message).toBeUndefined()
+        })
     })
   })
 
   describe('GET /api/v1/returnBadImplementationWithMessage', () => {
-    it('should response 500 with message', (done) => {
-      server.inject({
+    it('should response 500 with message', () => {
+      return server.inject({
         method: 'GET',
         url: '/api/v1/returnBadImplementationWithMessage'
-      }, (response) => {
-        const { statusCode, result } = response
-        const errorCode = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
-        const errorMeta = PanErrorCode[errorCode]
-        expect(statusCode).toBe(errorMeta.STATUS_CODE)
-        expect(result.code).toBe(errorCode)
-        expect(result.message).toBeUndefined()
-        expect(result.payload).toBeUndefined()
-        done()
       })
+        .then((response) => {
+          const { statusCode, result } = response
+          const errorCode = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
+          const errorMeta = PanErrorCode[errorCode]
+          expect(statusCode).toBe(errorMeta.STATUS_CODE)
+          expect(result.code).toBe(errorCode)
+          expect(result.message).toBeUndefined()
+          expect(result.payload).toBeUndefined()
+        })
     })
   })
 
   describe('GET /api/v1/returnBadImplementationWithMessageAndPayload', () => {
-    it('should response 500 with message and payload', (done) => {
+    it('should response 500 with message and payload', () => {
       server.inject({
         method: 'GET',
         url: '/api/v1/returnBadImplementationWithMessageAndPayload'
-      }, (response) => {
-        const { statusCode, result } = response
-        const errorCode = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
-        const errorMeta = PanErrorCode[errorCode]
-        expect(statusCode).toBe(errorMeta.STATUS_CODE)
-        expect(result.code).toBe(errorCode)
-        expect(result.message).toBeUndefined()
-        expect(result.payload).toBeDefined()
-        expect(result.payload.data).toBe(expectedResponsePayloadData)
-        done()
       })
+        .then((response) => {
+          const { statusCode, result } = response
+          const errorCode = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
+          const errorMeta = PanErrorCode[errorCode]
+          expect(statusCode).toBe(errorMeta.STATUS_CODE)
+          expect(result.code).toBe(errorCode)
+          expect(result.message).toBeUndefined()
+          expect(result.payload).toBeDefined()
+          expect(result.payload.data).toBe(expectedResponsePayloadData)
+        })
     })
   })
 
   describe('GET /api/v1/returnBadRequest', () => {
-    it('should response 400', (done) => {
+    it('should response 400', () => {
       server.inject({
         method: 'GET',
         url: '/api/v1/returnBadRequest'
-      }, (response) => {
-        const { statusCode, result } = response
-        const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
-        const errorMeta = PanErrorCode[errorCode]
-        expect(statusCode).toBe(errorMeta.STATUS_CODE)
-        expect(result.code).toBe(errorCode)
-        expect(result.message).toBe(errorMeta.MESSAGE)
-        done()
       })
+        .then((response) => {
+          const { statusCode, result } = response
+          const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
+          const errorMeta = PanErrorCode[errorCode]
+          expect(statusCode).toBe(errorMeta.STATUS_CODE)
+          expect(result.code).toBe(errorCode)
+          expect(result.message).toBe(errorMeta.MESSAGE)
+        })
     })
   })
 
   describe('GET /api/v1/returnBadRequestWithMessage', () => {
-    it('should response 400 with message', (done) => {
+    it('should response 400 with message', () => {
       server.inject({
         method: 'GET',
         url: '/api/v1/returnBadRequestWithMessage'
-      }, (response) => {
-        const { statusCode, result } = response
-        const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
-        const errorMeta = PanErrorCode[errorCode]
-        expect(statusCode).toBe(errorMeta.STATUS_CODE)
-        expect(result.code).toBe(errorCode)
-        expect(result.message).toBe(expectedResponseMessage)
-        expect(result.payload).toBeUndefined()
-        done()
       })
+        .then((response) => {
+          const { statusCode, result } = response
+          const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
+          const errorMeta = PanErrorCode[errorCode]
+          expect(statusCode).toBe(errorMeta.STATUS_CODE)
+          expect(result.code).toBe(errorCode)
+          expect(result.message).toBe(expectedResponseMessage)
+          expect(result.payload).toBeUndefined()
+        })
     })
   })
 
   describe('GET /api/v1/returnBadRequestWithMessageAndPayload', () => {
-    it('should response 500 with message and payload', (done) => {
+    it('should response 500 with message and payload', () => {
       server.inject({
         method: 'GET',
         url: '/api/v1/returnBadRequestWithMessageAndPayload'
-      }, (response) => {
-        const { statusCode, result } = response
-        const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
-        const errorMeta = PanErrorCode[errorCode]
-        expect(statusCode).toBe(errorMeta.STATUS_CODE)
-        expect(result.code).toBe(errorCode)
-        expect(result.message).toBe(expectedResponseMessage)
-        expect(result.payload).toBeDefined()
-        expect(result.payload.data).toBe(expectedResponsePayloadData)
-        done()
       })
+        .then((response) => {
+          const { statusCode, result } = response
+          const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
+          const errorMeta = PanErrorCode[errorCode]
+          expect(statusCode).toBe(errorMeta.STATUS_CODE)
+          expect(result.code).toBe(errorCode)
+          expect(result.message).toBe(expectedResponseMessage)
+          expect(result.payload).toBeDefined()
+          expect(result.payload.data).toBe(expectedResponsePayloadData)
+        })
     })
   })
 })
