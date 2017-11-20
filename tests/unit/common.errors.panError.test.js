@@ -5,7 +5,7 @@ const PanErrorCode = require('../../common/errors/PanErrorCode')
 
 
 const throwPanError = (code, message, payload) => {
-  throw new PanError(code, message, payload);
+  throw new PanError(code, message, payload)
 }
 
 describe('PanError Test...', () => {

@@ -11,12 +11,30 @@ const routes = (server, options, next) => {
     // main
     { method: 'GET', path: '/', config: Main.home },
 
-    // error
+    // throw boom error
+    { method: 'GET', path: '/throwBoomImplementationError', config: PanError.throwBoomImplementationError },
+    { method: 'GET', path: '/throwBoomImplementationErrorWithPayload', config: PanError.throwBoomImplementationErrorWithPayload },
+    { method: 'GET', path: '/throwBoomBadRequest', config: PanError.throwBoomBadRequest },
+    { method: 'GET', path: '/throwBoomBadRequestInDeeperLayer', config: PanError.throwBoomBadRequestInDeeperLayer },
+
+    //throw normal error
+    { method: 'GET', path: '/throwNormalError', config: PanError.throwNormalError },
+    { method: 'GET', path: '/throwNormalErrorInDeeperLayer', config: PanError.throwNormalErrorInDeeperLayer },
+
+    // throw pan error
+    { method: 'GET', path: '/throwPanInternalServerError', config: PanError.throwPanInternalServerError },
+    { method: 'GET', path: '/throwPanInternalServerErrorWithExtra', config: PanError.throwPanInternalServerErrorWithExtra },
+    { method: 'GET', path: '/throwPanBadRequestError', config: PanError.throwPanBadRequestError },
+
+    // return pan error
+    { method: 'GET', path: '/returnPanInternalServerError', config: PanError.returnPanInternalServerError },
+    { method: 'GET', path: '/returnPanBadRequestWithExtra', config: PanError.returnPanBadRequestWithExtra },
+
+    // return error
     // conclusion: promise need be returned or handle catch explicitly
     { method: 'GET', path: '/returnError', config: Error.returnError },
     { method: 'GET', path: '/returnBoomError', config: Error.returnBoomError },
-    { method: 'GET', path: '/throwError', config: Error.throwError },
-    { method: 'GET', path: '/throwBoomError', config: Error.throwBoomError },
+
     { method: 'GET', path: '/rejectErrorInReturnedPromise', config: Error.rejectErrorInReturnedPromise },
     { method: 'GET', path: '/rejectErrorInNoReturnedPromise', config: Error.rejectErrorInNoReturnedPromise },
     { method: 'GET', path: '/throwErrorInReturnedPromise', config: Error.throwErrorInReturnedPromise },
@@ -25,14 +43,6 @@ const routes = (server, options, next) => {
     { method: 'GET', path: '/rejectErrorInAsyncWithinNoReturnedPromise', config: Error.rejectErrorInAsyncWithinNoReturnedPromise },
     { method: 'GET', path: '/throwErrorInAsyncWithinReturnedPromise', config: Error.throwErrorInAsyncWithinReturnedPromise },
     { method: 'GET', path: '/throwErrorInAsyncWithinNoReturnedPromise', config: Error.throwErrorInAsyncWithinNoReturnedPromise },
-
-    // pan error
-    { method: 'GET', path: '/returnBadImplementation', config: PanError.returnBadImplementation },
-    { method: 'GET', path: '/returnBadImplementationWithMessage', config: PanError.returnBadImplementationWithMessage },
-    { method: 'GET', path: '/returnBadImplementationWithMessageAndPayload', config: PanError.returnBadImplementationWithMessageAndPayload },
-    { method: 'GET', path: '/returnBadRequest', config: PanError.returnBadRequest },
-    { method: 'GET', path: '/returnBadRequestWithMessage', config: PanError.returnBadRequestWithMessage },
-    { method: 'GET', path: '/returnBadRequestWithMessageAndPayload', config: PanError.returnBadRequestWithMessageAndPayload },
 
     // user
     { method: 'GET', path: '/hello/{user?}', config: User.greetingUser},

@@ -7,5 +7,9 @@ module.exports = {
   PAN_FE_API_400: {
     MESSAGE: 'Bad request',
     STATUS_CODE: 400
+  },
+  PAN_FE_API_400_INVALID_SEQUENCE: {
+    MESSAGE: 'Bad request',
+    STATUS_CODE: 400
   }
 }

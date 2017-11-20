@@ -1,38 +1,21 @@
 const Request = require('request')
 const boom = require('boom')
-const fries = require('../common/errors/fries')
 
 
 const returnError = {
   handler: function (request, reply) {
     // not return customized message to client
-    reply(new Error('Return error'))
+    reply(new Error('This is a testing error'))
   }
 }
 
 const returnBoomError = {
   handler: function (request, reply) {
     // return customized message to client
-    reply(boom.badRequest('Return boom error'))
+    reply(boom.badImplementation('This is a testing error'))
   }
 }
 
-const throwError = {
-  handler: function (request, reply) {
-    // not trigger uncaught error
-    // protected by hapi and return 500 internal server error
-    throw new Error('Throw error')
-  }
-}
-
-const throwBoomError = {
-  handler: function (request, reply) {
-    // not trigger uncaught error
-    // protected by hapi and return 500 internal server error
-    // need more approval, since test case not get response but a exception
-    throw boom.badRequest('Throw boom error')
-  }
-}
 
 const rejectErrorInReturnedPromise = {
   handler: function (request, reply) {
@@ -131,8 +114,6 @@ const throwErrorInAsyncWithinNoReturnedPromise = {
 module.exports = {
   returnError,
   returnBoomError,
-  throwError,
-  throwBoomError,
   rejectErrorInReturnedPromise,
   rejectErrorInNoReturnedPromise,
   throwErrorInReturnedPromise,
