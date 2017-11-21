@@ -1,5 +1,5 @@
+const _ = require('lodash')
 const winston = require('../common/winston')
-const swig = require('swig')
 const PanException = require('../common/errors/PanException')
 const PanErrorMeta = require('../common/errors/PanErrorMeta')
 const PanErrorConstants = require('../common/errors/PanErrorConstants')
@@ -59,9 +59,11 @@ const isPanErrorResponse = (response) => {
   return response.message && response.message.indexOf('PAN_') === 0
 }
 
+
+_.templateSettings.interpolate = /{{([\s\S]+?)}}/g
 const applyErrorTemplate = (template, payload) => {
   if (payload) {
-    return swig.compile(template)(payload)
+    return _.template(template)(payload)
   } else {
     return template
   }

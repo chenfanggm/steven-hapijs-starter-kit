@@ -75,10 +75,9 @@
     "hapi": "^16.6.2",
     "inert": "^4.2.1",
     "joi": "^13.0.2",
+    "lodash": "^4.17.4",
     "nes": "^7.0.1",
     "rotating-file-stream": "^1.3.4",
-    "string-template": "^1.0.0",
-    "swig": "^1.4.2",
     "winston": "^2.4.0",
     "winston-daily-rotate-file": "^1.7.2"
   },
