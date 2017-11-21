@@ -1,54 +1,58 @@
 'use strict'
-const Main = require('./MainController')
-const User = require('./UserController')
-const Error = require('./ErrorController')
-const PanError = require('./PanErrorController')
-
+const MainController = require('./MainController')
+const UserController = require('./UserController')
+const ErrorController = require('./ErrorController')
+const PanErrorController = require('./PanErrorController')
 
 
 const routes = (server, options, next) => {
   server.route([
     // main
-    { method: 'GET', path: '/', config: Main.home },
+    { method: 'GET', path: '/', config: MainController.home },
 
     // throw boom error
-    { method: 'GET', path: '/throwBoomImplementationError', config: PanError.throwBoomImplementationError },
-    { method: 'GET', path: '/throwBoomImplementationErrorWithPayload', config: PanError.throwBoomImplementationErrorWithPayload },
-    { method: 'GET', path: '/throwBoomBadRequest', config: PanError.throwBoomBadRequest },
-    { method: 'GET', path: '/throwBoomBadRequestInDeeperLayer', config: PanError.throwBoomBadRequestInDeeperLayer },
+    { method: 'GET', path: '/throwBoomImplementationError', config: PanErrorController.throwBoomImplementationError },
+    { method: 'GET', path: '/throwBoomImplementationErrorWithPayload', config: PanErrorController.throwBoomImplementationErrorWithPayload },
+    { method: 'GET', path: '/throwBoomBadRequest', config: PanErrorController.throwBoomBadRequest },
+    { method: 'GET', path: '/throwBoomBadRequestInDeeperLayer', config: PanErrorController.throwBoomBadRequestInDeeperLayer },
+    { method: 'GET', path: '/throwBoomBadRequestWithExtra', config: PanErrorController.throwBoomBadRequestWithExtra },
 
     //throw normal error
-    { method: 'GET', path: '/throwNormalError', config: PanError.throwNormalError },
-    { method: 'GET', path: '/throwNormalErrorInDeeperLayer', config: PanError.throwNormalErrorInDeeperLayer },
+    { method: 'GET', path: '/throwNormalError', config: PanErrorController.throwNormalError },
+    { method: 'GET', path: '/throwNormalErrorInDeeperLayer', config: PanErrorController.throwNormalErrorInDeeperLayer },
 
     // throw pan error
-    { method: 'GET', path: '/throwPanInternalServerError', config: PanError.throwPanInternalServerError },
-    { method: 'GET', path: '/throwPanInternalServerErrorWithExtra', config: PanError.throwPanInternalServerErrorWithExtra },
-    { method: 'GET', path: '/throwPanBadRequestError', config: PanError.throwPanBadRequestError },
+    { method: 'GET', path: '/throwPanInternalServerError', config: PanErrorController.throwPanInternalServerError },
+    { method: 'GET', path: '/throwPanInternalServerErrorWithExtra', config: PanErrorController.throwPanInternalServerErrorWithExtra },
+    { method: 'GET', path: '/throwPanBadRequestError', config: PanErrorController.throwPanBadRequestError },
+    { method: 'GET', path: '/throwPanBadRequestErrorWithExtra', config: PanErrorController.throwPanBadRequestErrorWithExtra },
+    { method: 'GET', path: '/throwPanInvalidSequenceErrorWithExtra', config: PanErrorController.throwPanInvalidSequenceErrorWithExtra },
+
 
     // return pan error
-    { method: 'GET', path: '/returnPanInternalServerError', config: PanError.returnPanInternalServerError },
-    { method: 'GET', path: '/returnPanBadRequestWithExtra', config: PanError.returnPanBadRequestWithExtra },
+    { method: 'GET', path: '/returnPanInternalServerError', config: PanErrorController.returnPanInternalServerError },
+    { method: 'GET', path: '/returnPanBadRequestWithExtra', config: PanErrorController.returnPanBadRequestWithExtra },
 
     // return error
     // conclusion: promise need be returned or handle catch explicitly
-    { method: 'GET', path: '/returnError', config: Error.returnError },
-    { method: 'GET', path: '/returnBoomError', config: Error.returnBoomError },
+    { method: 'GET', path: '/returnError', config: ErrorController.returnError },
+    { method: 'GET', path: '/returnBoomError', config: ErrorController.returnBoomError },
 
-    { method: 'GET', path: '/rejectErrorInReturnedPromise', config: Error.rejectErrorInReturnedPromise },
-    { method: 'GET', path: '/rejectErrorInNoReturnedPromise', config: Error.rejectErrorInNoReturnedPromise },
-    { method: 'GET', path: '/throwErrorInReturnedPromise', config: Error.throwErrorInReturnedPromise },
-    { method: 'GET', path: '/throwErrorInNoReturnedPromise', config: Error.throwErrorInNoReturnedPromise },
-    { method: 'GET', path: '/rejectErrorInAsyncWithinReturnedPromise', config: Error.rejectErrorInAsyncWithinReturnedPromise },
-    { method: 'GET', path: '/rejectErrorInAsyncWithinNoReturnedPromise', config: Error.rejectErrorInAsyncWithinNoReturnedPromise },
-    { method: 'GET', path: '/throwErrorInAsyncWithinReturnedPromise', config: Error.throwErrorInAsyncWithinReturnedPromise },
-    { method: 'GET', path: '/throwErrorInAsyncWithinNoReturnedPromise', config: Error.throwErrorInAsyncWithinNoReturnedPromise },
+    // not-ref
+    { method: 'GET', path: '/rejectErrorInReturnedPromise', config: ErrorController.rejectErrorInReturnedPromise },
+    { method: 'GET', path: '/rejectErrorInNoReturnedPromise', config: ErrorController.rejectErrorInNoReturnedPromise },
+    { method: 'GET', path: '/throwErrorInReturnedPromise', config: ErrorController.throwErrorInReturnedPromise },
+    { method: 'GET', path: '/throwErrorInNoReturnedPromise', config: ErrorController.throwErrorInNoReturnedPromise },
+    { method: 'GET', path: '/rejectErrorInAsyncWithinReturnedPromise', config: ErrorController.rejectErrorInAsyncWithinReturnedPromise },
+    { method: 'GET', path: '/rejectErrorInAsyncWithinNoReturnedPromise', config: ErrorController.rejectErrorInAsyncWithinNoReturnedPromise },
+    { method: 'GET', path: '/throwErrorInAsyncWithinReturnedPromise', config: ErrorController.throwErrorInAsyncWithinReturnedPromise },
+    { method: 'GET', path: '/throwErrorInAsyncWithinNoReturnedPromise', config: ErrorController.throwErrorInAsyncWithinNoReturnedPromise },
 
     // user
-    { method: 'GET', path: '/hello/{user?}', config: User.greetingUser},
+    { method: 'GET', path: '/hello/{user?}', config: UserController.greetingUser},
 
     // default not found
-    { method: 'GET', path: '/{path*}', config: Main.notFound }
+    { method: 'GET', path: '/{path*}', config: MainController.notFound }
   ])
 
   next()

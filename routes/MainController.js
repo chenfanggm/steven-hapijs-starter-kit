@@ -1,3 +1,5 @@
+const boom = require('boom')
+
 
 const home = {
   handler: (request, reply) => {
@@ -7,7 +9,7 @@ const home = {
 
 const notFound = {
   handler: (request, reply) => {
-    reply('Not Found')
+    reply(boom.notFound('Not Found'))
   }
 }
 

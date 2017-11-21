@@ -1,12 +1,99 @@
 const axios = require('axios')
 const Promise = require('bluebird')
-const PanError = require('../common/errors/PanError')
+const PanException = require('../common/errors/PanException')
 const PanErrorConstants = require('../common/errors/PanErrorConstants')
 const boom = require('boom')
 
 
 const testMessage = 'This is a testing message'
 module.exports = {
+
+  throwPanInternalServerError: {
+    handler: (request, reply) => {
+      return Promise.resolve()
+        .then(() => {
+          throw new PanException(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
+        })
+    }
+  },
+
+  throwPanInternalServerErrorWithExtra: {
+    handler: (request, reply) => {
+      return Promise.resolve()
+        .then(() => {
+          throw new PanException(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR, {
+            extra: testMessage
+          })
+        })
+    }
+  },
+
+  throwPanBadRequestError: {
+    handler: (request, reply) => {
+      return Promise.resolve()
+        .then(() => {
+          throw new PanException(PanErrorConstants.FE_API.BAD_REQUEST)
+        })
+    }
+  },
+
+  throwPanBadRequestErrorWithExtra: {
+    handler: (request, reply) => {
+      return Promise.resolve()
+        .then(() => {
+          throw new PanException(PanErrorConstants.FE_API.BAD_REQUEST, {
+            extra: testMessage
+          })
+        })
+    }
+  },
+
+  throwPanInvalidSequenceErrorWithExtra: {
+    handler: (request, reply) => {
+      return Promise.resolve()
+        .then(() => {
+          //throw new PanException (code, [message], payload)
+          //throw new PanException ("PAN-QS-00009-INVALID-SEQUENCE", {sequenceNo: 1});
+          /*
+          {
+            "PAN-API-00001-INVALID-SEQUENCE" ; "Invalid Sequence Number {sequenceNo}. Should be {sequenceNo - 1} only."
+          }
+          */
+          /*
+            400
+            {
+              errorCode: "PAN-API-00001-INVALID-SEQUENCE",
+              message: "Invalid Sequence Number 1. Should be 0 only.",
+              payload: {
+                "sequenceNo": 1
+              }
+
+           */
+          throw new PanException(PanErrorConstants.FE_API.INVALID_SEQUENCE, {
+            sequenceNo: 1,
+            extra: testMessage
+          })
+        })
+    }
+  },
+
+  returnPanInternalServerError: {
+    handler: (request, reply) => {
+      reply(new PanException(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR))
+    }
+  },
+
+  returnPanBadRequestWithExtra: {
+    handler: (request, reply) => {
+      return Promise.resolve()
+        .then(() => {
+          throw new PanException(PanErrorConstants.FE_API.BAD_REQUEST, {
+            extra: testMessage
+          })
+        })
+    }
+  },
+
   throwBoomImplementationError: {
     handler: (request, reply) => {
       return Promise.resolve()
@@ -55,6 +142,17 @@ module.exports = {
     }
   },
 
+  throwBoomBadRequestWithExtra: {
+    handler: (request, reply) => {
+      return Promise.resolve()
+        .then(() => {
+          throw boom.badRequest(PanErrorConstants.FE_API.BAD_REQUEST, {
+            extra: testMessage
+          })
+        })
+    }
+  },
+
   throwNormalError: {
     handler: (request, reply) => {
       return Promise.resolve()
@@ -75,52 +173,6 @@ module.exports = {
             .catch((err) => {
               throw err
             })
-        })
-    }
-  },
-
-  throwPanInternalServerError: {
-    handler: (request, reply) => {
-      return Promise.resolve()
-        .then(() => {
-          throw new PanError(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
-        })
-    }
-  },
-
-  throwPanInternalServerErrorWithExtra: {
-    handler: (request, reply) => {
-      return Promise.resolve()
-        .then(() => {
-          throw new PanError(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR, {
-            extra: testMessage
-          })
-        })
-    }
-  },
-
-  throwPanBadRequestError: {
-    handler: (request, reply) => {
-      return Promise.resolve()
-        .then(() => {
-          throw new PanError(PanErrorConstants.FE_API.BAD_REQUEST)
-        })
-    }
-  },
-
-  returnPanInternalServerError: {
-    handler: (request, reply) => {
-      reply(new PanError(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR))
-    }
-  },
-
-  returnPanBadRequestWithExtra: {
-    handler: (request, reply) => {
-      return Promise.resolve()
-        .then(() => {
-          throw new PanError(PanErrorConstants.FE_API.BAD_REQUEST, {
-            extra: testMessage
-          })
         })
     }
   }

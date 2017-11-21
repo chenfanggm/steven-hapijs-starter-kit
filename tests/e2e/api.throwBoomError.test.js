@@ -1,6 +1,7 @@
 const server = require('../../server/server')
 const PanErrorConstants = require('../../common/errors/PanErrorConstants')
-const PanErrorCode = require('../../common/errors/PanErrorCode')
+const PanErrorCode = require('../../common/errors/PanErrorMeta')
+const CONSTANTS = require('../constants')
 
 
 describe('Testing Server Throw Boom Error...', () => {
@@ -14,7 +15,7 @@ describe('Testing Server Throw Boom Error...', () => {
         .then((response) => {
           const {statusCode, result} = response
           expect(statusCode).toBe(500)
-          expect(result.message).toBe(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
+          expect(result.errorCode).toBe(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
         })
     })
   })
@@ -28,7 +29,7 @@ describe('Testing Server Throw Boom Error...', () => {
         .then((response) => {
           const {statusCode, result} = response
           expect(statusCode).toBe(500)
-          expect(result.message).toBe(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
+          expect(result.errorCode).toBe(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
           expect(result.payload.stk.split('\n')[0]).toBe('Error: This is a test error')
         })
     })
@@ -43,13 +44,13 @@ describe('Testing Server Throw Boom Error...', () => {
         .then((response) => {
           const {statusCode, result} = response
           expect(statusCode).toBe(400)
-          expect(result.message).toBe(PanErrorConstants.FE_API.BAD_REQUEST)
+          expect(result.errorCode).toBe(PanErrorConstants.FE_API.BAD_REQUEST)
         })
     })
   })
 
   describe('GET /api/v1/throwBoomBadRequestInDeeperLayer', () => {
-    it('should response 500 only', () => {
+    it('should response 400 with message', () => {
       return server.inject({
         method: 'GET',
         url: '/api/v1/throwBoomBadRequestInDeeperLayer'
@@ -58,9 +59,26 @@ describe('Testing Server Throw Boom Error...', () => {
           const {statusCode, result} = response
           const errorMeta = PanErrorCode[PanErrorConstants.FE_API.BAD_REQUEST]
           expect(statusCode).toBe(400)
-          expect(result.message).toBe(PanErrorConstants.FE_API.BAD_REQUEST)
+          expect(result.errorCode).toBe(PanErrorConstants.FE_API.BAD_REQUEST)
+          expect(result.message).toBe(errorMeta.message)
           expect(result.payload.stk.split('\n')[0]).toBe('Error: This is a test error')
-          expect(result.payload.desc).toBe(errorMeta.message)
+        })
+    })
+  })
+
+  describe('GET /api/v1/throwBoomBadRequestWithExtra', () => {
+    it('should response 400 with message', () => {
+      return server.inject({
+        method: 'GET',
+        url: '/api/v1/throwBoomBadRequestWithExtra'
+      })
+        .then((response) => {
+          const {statusCode, result} = response
+          const errorMeta = PanErrorCode[PanErrorConstants.FE_API.BAD_REQUEST]
+          expect(statusCode).toBe(400)
+          expect(result.errorCode).toBe(PanErrorConstants.FE_API.BAD_REQUEST)
+          expect(result.message).toBe(errorMeta.message)
+          expect(result.payload.extra).toBe(CONSTANTS.EXPECTED_EXTRA_MESSAGE)
         })
     })
   })

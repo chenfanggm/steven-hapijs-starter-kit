@@ -1,6 +1,6 @@
 const server = require('../../server/server')
 const PanErrorConstants = require('../../common/errors/PanErrorConstants')
-const PanErrorCode = require('../../common/errors/PanErrorCode')
+const PanErrorCode = require('../../common/errors/PanErrorMeta')
 
 
 describe('Testing Server Throw Normal Error...', () => {
@@ -14,7 +14,9 @@ describe('Testing Server Throw Normal Error...', () => {
         .then((response) => {
           const {statusCode, result} = response
           expect(statusCode).toBe(500)
-          expect(result.message).toBe(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
+          expect(result.errorCode).toBe(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
+          expect(result.message).toBeUndefined()
+          expect(result.payload).toBeUndefined()
         })
     })
   })
@@ -28,7 +30,9 @@ describe('Testing Server Throw Normal Error...', () => {
         .then((response) => {
           const {statusCode, result} = response
           expect(statusCode).toBe(500)
-          expect(result.message).toBe(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
+          expect(result.errorCode).toBe(PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR)
+          expect(result.message).toBeUndefined()
+          expect(result.payload).toBeUndefined()
         })
     })
   })

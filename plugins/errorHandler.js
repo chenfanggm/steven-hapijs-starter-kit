@@ -1,8 +1,8 @@
 const winston = require('../common/winston')
-const PanError = require('../common/errors/PanError')
-const PanErrorCode = require('../common/errors/PanErrorCode')
+const swig = require('swig')
+const PanException = require('../common/errors/PanException')
+const PanErrorMeta = require('../common/errors/PanErrorMeta')
 const PanErrorConstants = require('../common/errors/PanErrorConstants')
-
 
 
 const errorHandler = (server, options, next) => {
@@ -21,31 +21,33 @@ const handleErrorAtPreResponse = (request, reply) => {
   if (!response.isBoom) {
     return reply.continue()
 
-  } else if (response instanceof PanError) {
+  } else if (response instanceof PanException) {
+
     response.output.payload = {}
-    if (response.code)
-      response.output.payload.message = response.code
-    if (response.message && !response.isInternal)
-      response.output.payload.desc = response.message
+    if (response.errorCode)
+      response.output.payload.errorCode = response.errorCode
+    if (response.message && !response.isInternal) {
+      response.output.payload.message = applyErrorTemplate(response.message, response.payload)
+    }
     if (response.payload)
       response.output.payload.payload = response.payload
-
     if (response.statusCode)
       response.output.statusCode = response.statusCode
 
   } else {
     response.output.payload = {}
     if (isPanErrorResponse(response)) {
-      response.output.payload.message = response.message
+      const errorCode = response.message
+      response.output.payload.errorCode = errorCode
       if (!response.isDeveloperError) {
-        const errorMeta = PanErrorCode[response.message]
-        response.output.payload.desc = errorMeta.MESSAGE
+        const errorMeta = PanErrorMeta[errorCode]
+        response.output.payload.message = applyErrorTemplate(errorMeta.message, response.data)
       }
     } else {
-      response.output.payload.message = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
+      response.output.payload.errorCode = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
     }
 
-    if (response.data)
+    if (response.data && Object.keys(response.data).length > 0)
       response.output.payload.payload = response.data
   }
 
@@ -55,6 +57,14 @@ const handleErrorAtPreResponse = (request, reply) => {
 
 const isPanErrorResponse = (response) => {
   return response.message && response.message.indexOf('PAN_') === 0
+}
+
+const applyErrorTemplate = (template, payload) => {
+  if (payload) {
+    return swig.compile(template)(payload)
+  } else {
+    return template
+  }
 }
 
 module.exports = {
