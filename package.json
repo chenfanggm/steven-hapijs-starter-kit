@@ -61,6 +61,7 @@
     }
   },
   "dependencies": {
+    "accept-language": "^3.0.18",
     "axios": "^0.17.1",
     "bluebird": "^3.5.1",
     "boom": "^7.1.1",
@@ -73,6 +74,7 @@
     "good-winston": "^4.0.0",
     "handlebars": "^4.0.11",
     "hapi": "^16.6.2",
+    "i18next": "^10.1.0",
     "inert": "^4.2.1",
     "joi": "^13.0.2",
     "lodash": "^4.17.4",

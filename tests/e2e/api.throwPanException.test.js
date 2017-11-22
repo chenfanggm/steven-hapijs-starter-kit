@@ -1,7 +1,9 @@
 const server = require('../../server/server')
-const PanErrorConstants = require('../../common/errors/PanErrorConstants')
-const PanErrorMeta = require('../../common/errors/PanErrorMeta')
+const PanErrorConstants = require('../../plugins/errorHandler/panErrorConstants')
+const PanErrorMeta = require('../../plugins/errorHandler/panErrorMeta')
+const PanErrorCode = require('../../plugins/errorHandler/locale/en/errorCode')
 const CONSTANTS = require('../constants')
+
 
 describe('Testing Server Throw Pan Exception...', () => {
 
@@ -48,10 +50,10 @@ describe('Testing Server Throw Pan Exception...', () => {
         .then((response) => {
           const { statusCode, result } = response
           const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
-          const errorMeta = PanErrorMeta[errorCode]
-          expect(statusCode).toBe(errorMeta.httpStatus)
+          expect(statusCode).toBe(400)
           expect(result.errorCode).toBe(errorCode)
-          expect(result.message).toBe(errorMeta.message)
+          expect(result.message).toBe(PanErrorCode[errorCode])
+
         })
     })
   })
@@ -65,10 +67,9 @@ describe('Testing Server Throw Pan Exception...', () => {
         .then((response) => {
           const { statusCode, result } = response
           const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
-          const errorMeta = PanErrorMeta[errorCode]
           expect(statusCode).toBe(400)
           expect(result.errorCode).toBe(errorCode)
-          expect(result.message).toBe(errorMeta.message)
+          expect(result.message).toBe(PanErrorCode[errorCode])
           expect(result.payload.extra).toBe(CONSTANTS.EXPECTED_EXTRA_MESSAGE)
         })
     })

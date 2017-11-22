@@ -6,7 +6,7 @@ const config = require('../config')
 const routes = require('../routes')
 const wsRoutes = require('../routesWS')
 const logger = require('../plugins/logger')
-const errorHandler = require('../plugins/errorHandler')
+const errorHandler = require('../plugins/errorHandler/errorHandler')
 const winston = require('../common/winston')
 
 

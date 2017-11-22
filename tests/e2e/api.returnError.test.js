@@ -1,5 +1,5 @@
 const server = require('../../server/server')
-const PanErrorConstants = require('../../common/errors/PanErrorConstants')
+const PanErrorConstants = require('../../plugins/errorHandler/panErrorConstants')
 const CONSTANTS = require('../constants')
 
 

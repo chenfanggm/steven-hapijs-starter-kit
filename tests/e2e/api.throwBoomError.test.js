@@ -1,6 +1,6 @@
 const server = require('../../server/server')
-const PanErrorConstants = require('../../common/errors/PanErrorConstants')
-const PanErrorCode = require('../../common/errors/PanErrorMeta')
+const PanErrorConstants = require('../../plugins/errorHandler/panErrorConstants')
+const PanErrorCode = require('../../plugins/errorHandler/panErrorMeta')
 const CONSTANTS = require('../constants')
 
 
@@ -61,7 +61,7 @@ describe('Testing Server Throw Boom Error...', () => {
           expect(statusCode).toBe(400)
           expect(result.errorCode).toBe(PanErrorConstants.FE_API.BAD_REQUEST)
           expect(result.message).toBe(errorMeta.message)
-          expect(result.payload.stk.split('\n')[0]).toBe('Error: This is a test error')
+          expect(result.payload.stk.split('\n')[0]).toBe('Error: This is a testing message')
         })
     })
   })

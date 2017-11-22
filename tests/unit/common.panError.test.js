@@ -1,6 +1,6 @@
-const PanException = require('../../common/errors/PanException')
-const PanErrorConstants = require('../../common/errors/PanErrorConstants')
-const PanErrorCode = require('../../common/errors/PanErrorMeta')
+const PanException = require('../../plugins/errorHandler/PanException')
+const PanErrorConstants = require('../../plugins/errorHandler/panErrorConstants')
+const PanErrorCode = require('../../plugins/errorHandler/locale/en/errorCode')
 
 
 const throwPanException = (errorCode, message, payload) => {
@@ -10,8 +10,7 @@ const throwPanException = (errorCode, message, payload) => {
 describe('PanException Test...', () => {
 
   const errorCode = PanErrorConstants.FE_API.INTERNAL_SERVER_ERROR
-  const errorMeta = PanErrorCode[errorCode]
-  const message = errorMeta.message
+  const message = PanErrorCode[errorCode]
   const errorPayload = {
     status: 500
   }
@@ -51,7 +50,7 @@ describe('PanException Test...', () => {
   })
 
   describe('when throw a errorCode only PanException', () => {
-    it('should still have the errorCode and message', () => {
+    it('should still have the errorCode only', () => {
       try {
         throwPanException(errorCode)
       } catch (err) {
@@ -76,7 +75,7 @@ describe('PanException Test...', () => {
   })
 
   describe('when throw a errorCode and payload only PanException', () => {
-    it('should still have the errorCode, codeErrorMessage, and payload', () => {
+    it('should still have the errorCode and payload', () => {
       try {
         throwPanException(errorCode, errorPayload)
       } catch (err) {
@@ -101,14 +100,13 @@ describe('PanException Test...', () => {
   })
 
   describe('when throw a errorCode only PanException, and that errorCode does not have message', () => {
-    it('should have the errorCode and the pre-defined message', () => {
+    it('should have the errorCode only', () => {
       const errorCode = PanErrorConstants.FE_API.BAD_REQUEST
-      const errorMeta = PanErrorCode[errorCode]
       try {
         throwPanException(errorCode)
       } catch (err) {
         expect(err.errorCode).toBe(errorCode)
-        expect(err.message).toBe(errorMeta.message)
+        expect(err.message).toBe(PanErrorCode[errorCode])
         expect(err.payload).toBeUndefined()
       }
     })

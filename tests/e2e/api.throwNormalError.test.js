@@ -1,6 +1,6 @@
 const server = require('../../server/server')
-const PanErrorConstants = require('../../common/errors/PanErrorConstants')
-const PanErrorCode = require('../../common/errors/PanErrorMeta')
+const PanErrorConstants = require('../../plugins/errorHandler/panErrorConstants')
+const PanErrorCode = require('../../plugins/errorHandler/panErrorMeta')
 
 
 describe('Testing Server Throw Normal Error...', () => {

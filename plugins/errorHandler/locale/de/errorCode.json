@@ -1,0 +1,5 @@
+{
+  "PAN_FE_API_INTERNAL_SERVER_ERROR": "De Internal server error",
+  "PAN_FE_API_BAD_REQUEST": "De Bad request",
+  "PAN_FE_API_INVALID_SEQUENCE": "De Invalid Sequence Number {{sequenceNo}}. Should be {{preSequenceNo}} only."
+}

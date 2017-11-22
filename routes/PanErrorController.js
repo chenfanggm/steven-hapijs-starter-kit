@@ -1,7 +1,7 @@
 const axios = require('axios')
 const Promise = require('bluebird')
-const PanException = require('../common/errors/PanException')
-const PanErrorConstants = require('../common/errors/PanErrorConstants')
+const PanException = require('../plugins/errorHandler/PanException')
+const PanErrorConstants = require('../plugins/errorHandler/panErrorConstants')
 const boom = require('boom')
 
 
@@ -52,25 +52,9 @@ module.exports = {
     handler: (request, reply) => {
       return Promise.resolve()
         .then(() => {
-          //throw new PanException (code, [message], payload)
-          //throw new PanException ("PAN-QS-00009-INVALID-SEQUENCE", {sequenceNo: 1});
-          /*
-          {
-            "PAN-API-00001-INVALID-SEQUENCE" ; "Invalid Sequence Number {sequenceNo}. Should be {sequenceNo - 1} only."
-          }
-          */
-          /*
-            400
-            {
-              errorCode: "PAN-API-00001-INVALID-SEQUENCE",
-              message: "Invalid Sequence Number 1. Should be 0 only.",
-              payload: {
-                "sequenceNo": 1
-              }
-
-           */
           throw new PanException(PanErrorConstants.FE_API.INVALID_SEQUENCE, {
             sequenceNo: 1,
+            preSequenceNo: 0,
             extra: testMessage
           })
         })
@@ -133,7 +117,7 @@ module.exports = {
             path: 'errorlocation'
           })
             .catch((err) => {
-              const error = new Error('This is a test error')
+              const error = new Error(testMessage)
               throw boom.badRequest(PanErrorConstants.FE_API.BAD_REQUEST, {
                 stk: error.stack
               })
@@ -157,7 +141,7 @@ module.exports = {
     handler: (request, reply) => {
       return Promise.resolve()
         .then(() => {
-          throw new Error('This is a normal testing error')
+          throw new Error(testMessage)
         })
     }
   },

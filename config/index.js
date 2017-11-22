@@ -51,8 +51,18 @@ module.exports = {
     secret: 'eyJ0aXRsZSI6ImZ1Y2sgeW91IHBheSBtZSIsImxlYWQiOiJ0'
   },
 
-  pwd:{
+  pwd: {
     secret: 'hapijs_starter_secret'
+  },
+
+  // ----------------------------------
+  // i18n Configuration
+  // ----------------------------------
+  i18n: {
+    fallbackLng: 'en',
+    ns: ['file1', 'file2'],
+    defaultNS: 'file1',
+    debug: true
   },
 
   // ----------------------------------
